@@ -1,0 +1,63 @@
+{
+  "models": [
+    {
+      "id": "deepseek-reasoner",
+      "name": "Deepseek Reasoner",
+      "description": "Advanced reasoning model for penetration testing and security assessment",
+      "provider": "deepseek",
+      "base_url": "https://api.deepseek.com/v1",
+      "parameters": {
+        "temperature": 0.7,
+        "max_tokens": 2000,
+        "top_p": 0.9,
+        "frequency_penalty": 0.1,
+        "presence_penalty": 0.1
+      },
+      "system_prompt": "You are an AI penetration testing assistant. Convert user requests into structured penetration testing plans with realistic commands and security considerations.",
+      "capabilities": [
+        "network_scanning",
+        "web_vulnerability_assessment",
+        "sql_injection_testing",
+        "directory_enumeration",
+        "ssl_analysis",
+        "brute_force_testing",
+        "security_reporting"
+      ]
+    }
+  ],
+  "ui_config": {
+    "title": "AI Pentest Agent",
+    "description": "Intelligent Penetration Testing Assistant",
+    "theme": "dark",
+    "primary_color": "#2563eb",
+    "secondary_color": "#1e40af",
+    "custom_css": "/custom/pentest-theme.css"
+  },
+  "features": {
+    "enable_chat_history": true,
+    "enable_model_switching": false,
+    "enable_system_prompts": true,
+    "enable_temperature_control": true,
+    "enable_max_tokens_control": true,
+    "enable_streaming": true,
+    "enable_code_highlighting": true,
+    "enable_markdown_rendering": true,
+    "enable_file_upload": false,
+    "enable_voice_input": true,
+    "enable_export_chat": true
+  },
+  "security": {
+    "enable_auth": false,
+    "require_api_key": true,
+    "rate_limiting": {
+      "enabled": true,
+      "requests_per_minute": 30,
+      "requests_per_hour": 500
+    },
+    "content_filtering": {
+      "enabled": true,
+      "block_malicious_commands": false,
+      "log_all_requests": true
+    }
+  }
+}
