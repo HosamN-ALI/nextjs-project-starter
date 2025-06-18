@@ -1,0 +1,59 @@
+version: '3.8'
+
+services:
+  # Open WebUI Service
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    container_name: ai-pentest-webui
+    ports:
+      - "8080:8080"
+    environment:
+      - OPENAI_API_KEY=sk-1bd5de3f31db429cb8cbe73875537c5c
+      - OPENAI_API_BASE=https://api.deepseek.com/v1
+      - WEBUI_SECRET_KEY=your-secret-key-here
+      - WEBUI_AUTH=false
+      - DEFAULT_MODELS=deepseek-reasoner
+      - ENABLE_SIGNUP=true
+      - ENABLE_LOGIN_FORM=true
+      - WEBUI_NAME=AI Pentest Agent
+      - WEBUI_URL=http://localhost:8080
+    volumes:
+      - open-webui:/app/backend/data
+      - ./custom:/app/backend/data/custom
+    restart: unless-stopped
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # Redis for session management
+  redis:
+    image: redis:7-alpine
+    container_name: ai-pentest-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    restart: unless-stopped
+
+  # MongoDB for audit logs and session storage
+  mongodb:
+    image: mongo:7
+    container_name: ai-pentest-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=pentestpass123
+      - MONGO_INITDB_DATABASE=ai_pentest
+    volumes:
+      - mongodb-data:/data/db
+      - ./mongo-init:/docker-entrypoint-initdb.d
+    restart: unless-stopped
+
+volumes:
+  open-webui:
+  redis-data:
+  mongodb-data:
+
+networks:
+  default:
+    name: ai-pentest-network
